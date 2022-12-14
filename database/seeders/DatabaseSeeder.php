@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Genre;
+use App\Models\Movie;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -15,7 +16,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(10)->create();
-        Genre::factory(10)->create();
+        User::truncate();
+        Genre::truncate();
+        Movie::truncate();
+
+        User::factory(1)->create();
+        Genre::factory(1)->create();
+        Movie::factory(5)->create();
     }
 }

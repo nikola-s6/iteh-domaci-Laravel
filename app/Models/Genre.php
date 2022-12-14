@@ -11,5 +11,10 @@ class Genre extends Model
 
     protected $fillable = ['genre_name'];
 
+    public function movies()
+    {
+        return $this->hasMany(Movie::class);
+    }
+
     public $timestamps = false;
 }

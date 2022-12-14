@@ -33,6 +33,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function movies()
+    {
+        return $this->hasMany(Movie::class);
+    }
+
     /**
      * The attributes that should be cast.
      *
