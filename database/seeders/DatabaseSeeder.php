@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Comment;
 use App\Models\Genre;
 use App\Models\Movie;
 use App\Models\User;
@@ -20,8 +21,10 @@ class DatabaseSeeder extends Seeder
         Genre::truncate();
         Movie::truncate();
 
-        User::factory(1)->create();
-        Genre::factory(1)->create();
-        Movie::factory(5)->create();
+        // User::factory(1)->create();
+        // Genre::factory(1)->create();
+        // Movie::factory(5)->create();
+
+        Comment::factory(3)->create();
     }
 }
