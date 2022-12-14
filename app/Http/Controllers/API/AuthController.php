@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Rules\HasNumbers;
 use App\Rules\PasswordMatch;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -30,5 +31,24 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json(['registered_user' => $user, 'access_token' => $token, 'token_type' => 'Bearer']);
+    }
+
+    public function login(Request $request)
+    {
+        if (!Auth::attempt($request->only('username', 'password'))) {
+            return response()->json(["Login_failed" => "Unauthorized"], 401);
+        }
+
+        $user = User::where('username', $request['username'])->firstOrFail();
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json(['Message' => $user->username . ', you have successfully logged in!', 'access_token' => $token, 'token_type' => 'Bearer']);
+    }
+
+    public function logout()
+    {
+        auth()->user()->tokens()->delete();
+        return response()->json(['Message' => 'You have successfully loged out!']);
     }
 }
