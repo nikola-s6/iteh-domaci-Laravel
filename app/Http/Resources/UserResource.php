@@ -2,15 +2,12 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Genre;
+use App\Models\Comment;
 use App\Models\Movie;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class GenreResource extends JsonResource
+class UserResource extends JsonResource
 {
-
-    public static $wrap = 'genre';
-
     /**
      * Transform the resource into an array.
      *
@@ -19,11 +16,14 @@ class GenreResource extends JsonResource
      */
     public function toArray($request)
     {
-        $movies = Movie::get()->where('genre_id', $this->resource->id);
+        $movies = Movie::get()->where('user_id', $this->resource->id);
+        $comments = Comment::get()->where('user_id', $this->resource->id);
         return [
             'id' => $this->resource->id,
-            'genre_name' => $this->resource->genre_name,
+            'username' => $this->resource->username,
+            'email' => $this->resource->email,
             'movies' => MovieSimpleResource::collection($movies),
+            'comments' => CommentSimpleResource::collection($comments),
         ];
     }
 }

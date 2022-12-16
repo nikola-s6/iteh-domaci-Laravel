@@ -20,16 +20,6 @@ class GenreController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -42,7 +32,7 @@ class GenreController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['Error creating genre!', $validator->errors()]);
+            return response()->json($validator->errors());
         }
 
         $genre = Genre::create(['genre_name' => $request->genre_name]);
@@ -60,32 +50,9 @@ class GenreController extends Controller
     {
         $genre = Genre::find($genre_id);
         if (is_null($genre)) {
-            return response()->json('No genre found', 404);
+            return response()->json(['Message' => 'Genre not found'], 404);
         }
         return new GenreResource($genre);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Genre  $genre
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Genre $genre)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Genre  $genre
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Genre $genre)
-    {
-        //
     }
 
     /**
@@ -99,7 +66,7 @@ class GenreController extends Controller
         $genre = Genre::find($genre_id);
         if (!is_null($genre)) {
             $genre->delete();
-            return response()->json("Genre successfully deleted", 200);
+            return response()->json(["Message" => "Genre successfully deleted"], 200);
         }
     }
 }
