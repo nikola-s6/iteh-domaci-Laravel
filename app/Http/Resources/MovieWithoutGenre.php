@@ -2,15 +2,10 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Genre;
-use App\Models\Movie;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class GenreResource extends JsonResource
+class MovieWithoutGenre extends JsonResource
 {
-
-    public static $wrap = 'genre';
-
     /**
      * Transform the resource into an array.
      *
@@ -19,11 +14,12 @@ class GenreResource extends JsonResource
      */
     public function toArray($request)
     {
-        $movies = Movie::get()->where('genre_id', $this->resource->id);
         return [
             'id' => $this->resource->id,
-            'genre_name' => $this->resource->genre_name,
-            'movies' => MovieWithoutGenre::collection($movies),
+            'name' => $this->resource->name,
+            'release_date' => $this->resource->release_date,
+            'storyline' => $this->resource->storyline,
+            'author' => $this->resource->author,
         ];
     }
 }

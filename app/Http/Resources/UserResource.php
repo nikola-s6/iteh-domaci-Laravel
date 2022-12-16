@@ -25,7 +25,7 @@ class UserResource extends JsonResource
             'id' => $this->resource->id,
             'username' => $this->resource->username,
             'email' => $this->resource->email,
-            'movies' => MovieSimpleResource::collection($movies),
+            'movies' => MovieWithoutAuthor::collection($movies),
             'comments' => CommentSimpleResource::collection($comments),
         ];
     }
