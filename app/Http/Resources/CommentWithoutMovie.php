@@ -20,6 +20,8 @@ class CommentWithoutMovie extends JsonResource
             'id' => $this->resource->id,
             'text' => $this->resource->text,
             'movie_rating' => $this->resource->movie_rating,
+            'created_at' => $this->resource->created_at,
+            'updated_at' => $this->resource->updated_at,
             'author' => $this->resource->author,
         ];
     }

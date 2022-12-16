@@ -24,7 +24,6 @@ class MovieResource extends JsonResource
             'release_date' => $this->resource->release_date,
             'storyline' => $this->resource->storyline,
             'author' => $this->resource->author,
-            'comments' => $this->resource->comments,
             'comments' => CommentWithoutMovie::collection($comments),
         ];
     }

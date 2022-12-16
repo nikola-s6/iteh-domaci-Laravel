@@ -71,7 +71,8 @@ class MovieController extends Controller
      */
     public function update(Request $request, $movie_id)
     {
-        return response()->json($request->all());
+        // return response()->json($request->all());
+        return response()->json(['request' => $request->all()]);
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'release_date' => 'required|date',

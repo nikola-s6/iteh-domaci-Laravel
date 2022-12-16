@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\GenreController;
+use App\Http\Controllers\MovieCommentController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -28,6 +29,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::resource('/genre', GenreController::class)->only('index', 'show');
 Route::resource('/user', UserController::class)->only('index', 'show');
 Route::resource('/movie', MovieController::class)->only('index', 'show');
+Route::resource('movie.comments', MovieCommentController::class)->only('index', "show");
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -35,4 +37,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('/genre', GenreController::class)->only('store', 'destroy');
     Route::post('/user', [UserController::class, 'update']);
     Route::resource('/movie', MovieController::class)->only('store', 'destroy', 'update');
+    Route::resource('movie.comments', MovieCommentController::class)->only("store", "destroy", "update");
 });
