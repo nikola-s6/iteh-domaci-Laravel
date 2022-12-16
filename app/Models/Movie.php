@@ -13,6 +13,8 @@ class Movie extends Model
         'name',
         'release_date',
         'storyline',
+        'genre_id',
+        'user_id',
     ];
 
 

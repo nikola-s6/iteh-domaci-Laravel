@@ -33,6 +33,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::resource('/genre', GenreController::class)->only('store', 'destroy');
-
     Route::post('/user', [UserController::class, 'update']);
+    Route::resource('/movie', MovieController::class)->only('store', 'destroy', 'update');
 });
