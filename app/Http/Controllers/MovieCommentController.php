@@ -40,7 +40,7 @@ class MovieCommentController extends Controller
 
     public function update(Request $request, $movie_id, $comment_id)
     {
-        return response()->json(['request' => $request, 'movie id' => $movie_id, 'comment id' => $comment_id]);
+        // return response()->json(['request' => $request->all(), 'movie id' => $movie_id, 'comment id' => $comment_id]);
         $validator = Validator::make($request->all(), [
             'text' => 'required|string',
             'movie_rating' => ['required', new BetweenOneAndFive],
@@ -48,6 +48,19 @@ class MovieCommentController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors());
         }
+        $movie = Movie::find($movie_id);
+        if (is_null($movie)) {
+            return response()->json(["Message" => "Movie not found!"], 404);
+        }
+        $comment = Comment::find($comment_id);
+        if (is_null($comment)) {
+            return response()->json(["Message" => "Comment not found!"], 404);
+        }
+        if (!($comment->user_id === auth()->user()->id)) {
+            return response()->json(['Message' => 'Only author can edit a comment!'], 400);
+        }
+        $comment->update(['text' => $request->text, 'movie_rating' => $request->movie_rating]);
+        return response()->json(['Message' => 'Comment successfully edited!'], 200);
     }
 
     public function store(Request $request, $movie_id)

@@ -72,7 +72,7 @@ class MovieController extends Controller
     public function update(Request $request, $movie_id)
     {
         // return response()->json($request->all());
-        return response()->json(['request' => $request->all()]);
+        // return response()->json(['request' => $request->all()]);
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'release_date' => 'required|date',
@@ -82,18 +82,18 @@ class MovieController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors());
         }
-        $genre = Genre::get()->where('genre_name', $request->genre);
+        $genre = Genre::get()->where('genre_name', $request->genre)->first();
         if (is_null($genre)) {
             return response()->json(["Message" => "Genre not found"], 404);
         }
-        $movie = Movie::get()->where('id', $movie_id);
+        $movie = Movie::get()->where('id', $movie_id)->first();
         if (is_null($movie)) {
             return response()->json(["Message" => "Movie not found"], 404);
         }
         if (!($movie->user_id === auth()->user()->id)) {
             return response()->json(["Message" => "Only author can update the movie!"], 400);
         }
-        $movie->update(['name' => $request->name, 'release_date' => $request->release_date, 'storyline' => $request->storyline]);
+        $movie->update(['name' => $request->name, 'release_date' => $request->release_date, 'storyline' => $request->storyline, 'genre_id' => $genre->id]);
         return response()->json(['Message' => 'Movie successfully updated!'], 200);
     }
 
