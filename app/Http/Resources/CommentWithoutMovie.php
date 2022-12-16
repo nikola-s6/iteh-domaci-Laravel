@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CommentSimpleResource extends JsonResource
+class CommentWithoutMovie extends JsonResource
 {
 
     public static $wrap = 'comment';
@@ -20,7 +20,6 @@ class CommentSimpleResource extends JsonResource
             'id' => $this->resource->id,
             'text' => $this->resource->text,
             'movie_rating' => $this->resource->movie_rating,
-            'movie' => new MovieSimpleResource($this->resource->movie),
             'author' => $this->resource->author,
         ];
     }

@@ -5,9 +5,12 @@ namespace App\Http\Resources;
 use App\Models\Comment;
 use App\Models\Movie;
 use Illuminate\Http\Resources\Json\JsonResource;
+use SebastianBergmann\CodeCoverage\StaticAnalysisCacheNotConfiguredException;
 
 class UserResource extends JsonResource
 {
+
+    public static $wrap = "user";
     /**
      * Transform the resource into an array.
      *
